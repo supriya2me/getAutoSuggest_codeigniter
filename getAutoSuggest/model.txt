@@ -1,0 +1,18 @@
+ public function getAutoSuggest($keyword,$source){
+		$data = array();
+			$field_name = $source['field_name'];
+			$table_name = $source['table_name'];
+			$this->db->like($field_name, $keyword,'after');
+			$this->db->select('DISTINCT('.$field_name.')');
+			$this->db->from($table_name);
+			$this->db->limit(20);
+			$rs = $this->db->get();
+//			debug($this->db->last_query());
+			if($rs->num_rows()){
+				foreach($rs->result() as $row){
+					$data[] = array('id' => $row->{$field_name}, 'name' => $row->{$field_name}, 'label' => $row->{$field_name});
+				}
+			}
+
+		return $data;
+	}

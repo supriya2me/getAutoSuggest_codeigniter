@@ -1,0 +1,23 @@
+public function getAutoSuggestData()
+	 {	
+			$txt = $this->input->get('q');
+			$search_type = $this->input->get('search_type');
+			$source = array();
+			switch($search_type){	
+				case 'city':
+				 $source['table_name'] = TABLE_CITIES;
+				 $source['field_name'] = "CITY_NAME";
+				break;
+				case 'state':
+				 $source['table_name'] = TABLE_STATES;
+				 $source['field_name'] = "STATE_NAME";
+				break;
+				case 'country':
+				 $source['table_name'] = TABLE_COUNTRIES;
+				 $source['field_name'] = "COUNTRY_NAME";
+				break;
+				
+			}
+			$data = $this->base_model->getAutoSuggest(strtoupper($txt),$source);
+			echo json_encode($data);
+	 }

@@ -1,0 +1,40 @@
+calling function:
+
+
+autocompleteMethod($("#present_city"),"applicationform/getAutoSuggestData","city");
+
+
+
+
+var autocompleteMethod = function(elem,url,search_type){	
+
+	   elem.autocomplete({
+		  source: function( request, response ) {
+			$.ajax({
+			  url: site_url+url,
+			  dataType: "json",
+			  data: {
+				q: request.term,
+				search_type:search_type
+			  },
+			  success: function( data ) {
+				response( data );
+			  }
+			});
+		  },
+		  minLength: 2,
+			select: function (event, ui) {
+				var form_id = elem.attr('id');
+				var label = ui.item.label;
+				var value = ui.item.value;
+				var id = ui.item.id;
+				
+				if(form_id == 'recpbook_place')
+				{	
+					alert(id);
+				}
+			   //store in session
+//			  document.valueSelectedForAutocomplete = value 
+			}
+	});
+  }
